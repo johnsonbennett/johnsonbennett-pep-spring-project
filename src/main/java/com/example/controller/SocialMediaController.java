@@ -1,9 +1,13 @@
 package com.example.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,10 +38,10 @@ public class SocialMediaController {
     public @ResponseBody ResponseEntity<Account> register(@RequestBody Account user) {
         Account registeredUser = accountService.registerUser(user);
         if (registeredUser != null) {
-            return ResponseEntity.status(200).body(registeredUser);
+            return ResponseEntity.status(400).body(registeredUser);
         }
         else {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.status(200).build();
         }
     }
 
@@ -60,4 +64,14 @@ public class SocialMediaController {
             return ResponseEntity.status(400).build();
         }
     }
+
+    @GetMapping("/messages")
+    public @ResponseBody ResponseEntity<List<Message>> getMessages(){
+        return ResponseEntity.status(200).body(messageService.getAllMessage());
+    }
+
+   // @DeleteMapping("/messages/{message_id}")
+    //public @ResponseBody ResponseEntity<Message> deleteMessageByID(@PathVariable "message_id"){
+    //    return ResponseEntity.status(200).body(messageService.deleteById(message_id))
+    //}
 }

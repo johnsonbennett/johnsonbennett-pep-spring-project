@@ -24,4 +24,14 @@ public class MessageService {
         }
         else return null;
     }
+
+   public List<Message> getAllMessage(){
+        return messageRepository.findAll();
+   }
+
+   public Message deleteById(int id){
+        Message deleted = messageRepository.getById(id);
+        messageRepository.deleteById(id);
+        return deleted;
+   }
 }

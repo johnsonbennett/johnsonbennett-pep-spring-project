@@ -15,7 +15,7 @@ public class AccountService {
         this.accountRepository=accountRepository;
     }
     public Account registerUser(Account user) {
-        if (user.getUsername() != null && !user.getUsername().isBlank() && user.getUsername().length() > 4) {
+        if (!user.getUsername().isBlank() && user.getUsername().length() > 4) {
             accountRepository.save(user);
             return user;
         }
