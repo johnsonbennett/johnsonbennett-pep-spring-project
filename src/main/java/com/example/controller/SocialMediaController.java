@@ -70,8 +70,18 @@ public class SocialMediaController {
         return ResponseEntity.status(200).body(messageService.getAllMessage());
     }
 
-   // @DeleteMapping("/messages/{message_id}")
-    //public @ResponseBody ResponseEntity<Message> deleteMessageByID(@PathVariable "message_id"){
-    //    return ResponseEntity.status(200).body(messageService.deleteById(message_id))
-    //}
+   @DeleteMapping("/messages/{messageId}")
+    public @ResponseBody ResponseEntity<Message> deleteMessageByID(@PathVariable int messageId){
+        return ResponseEntity.status(200).body(messageService.deleteById(messageId));
+    }
+
+    @GetMapping("/messages/{messageId}")
+    public @ResponseBody ResponseEntity<Message> getMessageById(@PathVariable int messageId){
+        return ResponseEntity.status(200).body(messageService.getMessageById(messageId));
+    }
+
+    @GetMapping("accounts/{accountId}/messages")
+    public @ResponseBody ResponseEntity<List<Message>> getMessageByUser(@PathVariable int accountId){
+        return ResponseEntity.status(200).body(messageService.getAllMessageByUser(accountId));
+    }
 }
