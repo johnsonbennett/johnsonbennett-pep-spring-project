@@ -30,13 +30,14 @@ public class MessageService {
         return messageRepository.findAll();
    }
 
-   public Message deleteById(int id) {
+   public Integer deleteById(int id) {
     Optional<Message> deleted = messageRepository.findById(id);
+    Integer deleteCount = messageRepository.countByMessageId(id);
     if (deleted.isPresent()) {
         messageRepository.deleteById(id);
-        return deleted.get();
+        return deleteCount;
     }
-    return null;
+    else return null;
     }
 
     public Message getMessageById(int id) {
@@ -51,6 +52,15 @@ public class MessageService {
         List<Message> messages = messageRepository.getMessageByPostedBy(accountId);
         return messages;
     }
+
+    public Integer UpdateById(int id, String message) {
+        Optional<Message> updated = messageRepository.findById(id);
+        Integer updateCount = messageRepository.countByMessageId(id);
+        if (updated.isPresent() && !message.isBlank() && message.length() < 255) {
+            return updateCount;
+        }
+        return null;
+        }
 
 
 }

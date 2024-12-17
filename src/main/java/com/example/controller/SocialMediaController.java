@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,7 +72,7 @@ public class SocialMediaController {
     }
 
    @DeleteMapping("/messages/{messageId}")
-    public @ResponseBody ResponseEntity<Message> deleteMessageByID(@PathVariable int messageId){
+    public @ResponseBody ResponseEntity<Integer> deleteMessageByID(@PathVariable int messageId){
         return ResponseEntity.status(200).body(messageService.deleteById(messageId));
     }
 
@@ -84,4 +85,15 @@ public class SocialMediaController {
     public @ResponseBody ResponseEntity<List<Message>> getMessageByUser(@PathVariable int accountId){
         return ResponseEntity.status(200).body(messageService.getAllMessageByUser(accountId));
     }
+    @PatchMapping("/messages/{messageId}")
+    public @ResponseBody ResponseEntity<Integer> UpdateMessageByID(@PathVariable int messageId, @RequestBody Message message){
+        String messageBody = message.getMessageText();
+        if(messageService.UpdateById(messageId,messageBody) !=null){
+            return ResponseEntity.status(200).body(messageService.UpdateById(messageId, messageBody));
+        }
+        else {
+            return ResponseEntity.status(400).build();
+        }
+    }
+
 }
