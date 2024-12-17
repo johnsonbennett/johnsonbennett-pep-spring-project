@@ -37,13 +37,15 @@ public class SocialMediaController {
     
     @PostMapping("/register")
     public @ResponseBody ResponseEntity<Account> register(@RequestBody Account user) {
-        Account registeredUser = accountService.registerUser(user);
-        if (registeredUser != null) {
-            return ResponseEntity.status(400).body(registeredUser);
+        
+        System.out.println(" Check Exists(Controller): " + accountService.accountExist(user.getUsername()));
+        if(accountService.accountExist(user.getUsername())){
+            return ResponseEntity.status(409).build();
         }
-        else {
-            return ResponseEntity.status(200).build();
+        else if(accountService.registerUser(user) !=null){
+            return ResponseEntity.status(200).body(accountService.registerUser(user));
         }
+        else return ResponseEntity.status(400).build();
     }
 
     @PostMapping("/login")

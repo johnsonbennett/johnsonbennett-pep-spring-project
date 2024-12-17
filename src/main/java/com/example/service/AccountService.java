@@ -14,12 +14,21 @@ public class AccountService {
     public void setAccountRepository(AccountRepository accountRepository){
         this.accountRepository=accountRepository;
     }
+
+    public boolean accountExist(String username){
+        return accountRepository.existsByUsername(username);
+    }
     public Account registerUser(Account user) {
-        if (!user.getUsername().isBlank() && user.getUsername().length() > 4) {
+        System.out.println("Exist(Service): " + accountExist(user.getUsername()));
+        if (!user.getUsername().isBlank() && user.getUsername().length() >= 4) {
+            System.out.println("Account not exist, returning user");
             accountRepository.save(user);
             return user;
         }
-        else return null;
+        else{ 
+            System.out.println("Invalid account, returning null");
+            return null;
+        }
     }
     
     public Account loginUser(Account user) {

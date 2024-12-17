@@ -16,4 +16,6 @@ public interface MessageRepository extends JpaRepository<Message,Integer> {
 
     Integer countByMessageId(int id);
 
+    boolean existsByPostedBy(Integer postedBy);
+
 }

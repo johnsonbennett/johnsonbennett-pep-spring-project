@@ -19,7 +19,8 @@ public class MessageService {
     }
 
     public Message createMessage(Message message){
-        if(!message.getMessageText().isBlank() && message.getMessageText().length() < 255){
+        boolean valid_poster = messageRepository.existsByPostedBy(message.getPostedBy());
+        if(!message.getMessageText().isBlank() && message.getMessageText().length() < 255 && valid_poster){
             messageRepository.save(message);
             return message;
         }
